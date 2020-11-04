@@ -32,6 +32,11 @@ module.exports = app => {
     tableName: 'wallet'
   });
 
+  /**
+   * 获取未分配的钱包
+   * @param number
+   * @returns {Promise<TInstance[]>}
+   */
   Wallet.getUnallocatedWallet = async function(number) {
     return await this.findAll( {
       where: {
@@ -41,6 +46,11 @@ module.exports = app => {
     })
   }
 
+  /**
+   * 查找某一个钱包
+   * @param wallet
+   * @returns {Promise<TInstance>}
+   */
   Wallet.findByWallet= async function(wallet) {
     return await this.findOne( {
       where: {
@@ -49,7 +59,12 @@ module.exports = app => {
     })
   }
 
-
+  /**
+   * 分配钱包
+   * @param appId
+   * @param wallets
+   * @returns {Promise<*>}
+   */
   Wallet.allocatedWallet = async function(appId, wallets) {
     let param = {
       wallet:{
