@@ -5,10 +5,9 @@
 .vscode
 /node_modules
 /logs/
-/run
+/run/
 #idea
 /.idea
 
 #static
 /static/tmp/*
-/run/

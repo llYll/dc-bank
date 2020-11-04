@@ -1,21 +1,20 @@
 const Subscription = require('egg').Subscription;
 
-
-class SyncHeight extends Subscription {
+class MonitorRecharge extends Subscription {
   static get schedule(){
     return {
-      interval: '30s', // 30s 间隔
+      interval: '10s', // 30s 间隔
       type: 'worker', // 随机一个work执行
     };
   }
 
   /**
-   * 同步区块高度
+   * 监听充值
    * @param ctx
    * @returns {Promise<void>}
    */
   async subscribe(ctx) {
-    await this.ctx.service.lotusMonitor.syncHeight();
+    await  this.ctx.service.lotusMonitor.rechargeMonitor();
   }
 }
-module.exports = SyncHeight
+module.exports = MonitorRecharge
