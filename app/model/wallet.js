@@ -38,9 +38,10 @@ module.exports = app => {
    * @returns {Promise<TInstance[]>}
    */
   Wallet.getUnallocatedWallet = async function(number) {
+    const constant = this.ctx.config.constant;
     return await this.findAll( {
       where: {
-        status: 0
+        status: constant.WALLET_STATUS.INIT
       },
       limit: number
     })
@@ -66,6 +67,7 @@ module.exports = app => {
    * @returns {Promise<*>}
    */
   Wallet.allocatedWallet = async function(appId, wallets) {
+    const constant = this.ctx.config.constant;
     let param = {
       wallet:{
         [Op.in]: wallets
@@ -73,7 +75,7 @@ module.exports = app => {
     };
     return await this.update( {
       appId,
-      status: 1,
+      status: constant.WALLET_STATUS.ALLOCATED,
     },{
       where: param
     })

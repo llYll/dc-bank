@@ -23,15 +23,42 @@ module.exports = appInfo => {
     // myAppName: 'egg',
   };
 
+
+  config.RABBITMQ_CONFIG = {
+    OPTIONS: {
+      protocol: 'amqp',
+      hostname: '127.0.0.1', // 连接地址
+      port: 5672,
+      username: 'admin',
+      password: 'admin',
+    },
+    EXCHANGE_TYPE: {
+      fanout: 'fanout',
+      topic: 'topic',
+      direct: 'direct',
+    },
+  };
+
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+  };
+
+  config.constant = require('../app/common/constant');
+
   config.lotus = {
     url: 'http://115.236.22.225:1234/rpc/v0',
     token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBbGxvdyI6WyJyZWFkIiwid3JpdGUiLCJzaWduIiwiYWRtaW4iXX0.EfXz4KsMLrwx7JVcQ2sG54-0vJjkbvCogB4z3MpAHVs'
   };
+
+
   config.security = {
     csrf: {
       enable: false,
     }
   }
+
+
   config.sequelize = {
     dialect: 'mysql',
     host: '127.0.0.1',
