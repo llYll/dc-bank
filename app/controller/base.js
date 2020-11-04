@@ -7,6 +7,7 @@ class BaseController extends Controller {
   success(data) {
     this.ctx.body = {
       success: true,
+      code: 200,
       data,
     };
   }
@@ -17,7 +18,6 @@ class BaseController extends Controller {
       code,
       msg
     };
-    // this.ctx.throw(400, msg);
   }
 
   notFound(msg) {

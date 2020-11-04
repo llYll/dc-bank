@@ -16,7 +16,7 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1604282424081_7651';
 
   // add your middleware config here
-  config.middleware = [];
+  config.middleware = ['errorHandler'];
 
   // add your user config here
   const userConfig = {
@@ -27,7 +27,11 @@ module.exports = appInfo => {
     url: 'http://115.236.22.225:1234/rpc/v0',
     token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBbGxvdyI6WyJyZWFkIiwid3JpdGUiLCJzaWduIiwiYWRtaW4iXX0.EfXz4KsMLrwx7JVcQ2sG54-0vJjkbvCogB4z3MpAHVs'
   };
-
+  config.security = {
+    csrf: {
+      enable: false,
+    }
+  }
   config.sequelize = {
     dialect: 'mysql',
     host: '127.0.0.1',

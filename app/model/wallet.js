@@ -50,14 +50,15 @@ module.exports = app => {
   }
 
 
-  Wallet.allocatedWallet = async function(wallets) {
+  Wallet.allocatedWallet = async function(appId, wallets) {
     let param = {
       wallet:{
         [Op.in]: wallets
       }
     };
     return await this.update( {
-      status: 1
+      appId,
+      status: 1,
     },{
       where: param
     })

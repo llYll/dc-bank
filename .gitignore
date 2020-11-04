@@ -11,3 +11,4 @@
 
 #static
 /static/tmp/*
+package-lock.json
