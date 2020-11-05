@@ -56,12 +56,15 @@ class LotusMonitorService extends Service {
               blockCid: blockCid,
               height: blockHeight,
             };
+            let record = await this.ctx.model.RechargeRecord.findRecord(param);
+            if(record)
+              continue;
             const values = {
               version: Version,
               to: To,
               from: From,
               nonce: Nonce,
-              value: this.ctx.helper.unitAmount(Value),
+              value: Value,
               gasLimit: GasLimit,
               gasFeeCap: GasFeeCap,
               gasPremium: GasPremium,
@@ -71,9 +74,12 @@ class LotusMonitorService extends Service {
               params: Params,
               dealCid: dealCid,
             };
-            await this.ctx.model.RechargeRecord.addRecord(param,values);
+            record = await this.ctx.model.RechargeRecord.addRecord(values);
             transactionCount++
+            await this.ctx.service.amqp.send(JSON.stringify(record));
+            await this.ctx.model.RechargeRecord.sendRecord(record.id);
           }
+
           for(let i = 0 ;i < SecpkMessages.length; i++ ){
             const { Version, To, From, Nonce, Value, GasLimit, GasFeeCap, GasPremium, Method, Params, CID } = SecpkMessages[i].Message;
             if(!To)
@@ -89,12 +95,16 @@ class LotusMonitorService extends Service {
               blockCid: blockCid,
               height: blockHeight,
             };
+            let record = await this.ctx.model.RechargeRecord.findRecord(param);
+            if(record)
+              continue;
+
             const values = {
               version: Version,
               to: To,
               from: From,
               nonce: Nonce,
-              value: this.ctx.helper.unitAmount(Value),
+              value: Value,
               gasLimit: GasLimit,
               gasFeeCap: GasFeeCap,
               gasPremium: GasPremium,
@@ -104,8 +114,11 @@ class LotusMonitorService extends Service {
               params: Params,
               dealCid: dealCid,
             };
-            await this.ctx.model.RechargeRecord.addRecord(param,values);
+            record = await this.ctx.model.RechargeRecord.addRecord(values);
             transactionCount ++ ;
+            const application = await this.ctx.model.Application.findByPk(wallet.appId);
+            await this.ctx.service.amqp.send(application.name, JSON.stringify(record));
+            await this.ctx.model.RechargeRecord.sendRecord(record.id);
           }
         } else {
           throw reason;

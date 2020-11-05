@@ -1,8 +1,10 @@
+const BigNumber = require('bignumber.js')
+
 module.exports = {
   unitAmount(number, decimal = 18) {
-    number = Number.parseInt(number);
-    decimal = Math.pow(10, decimal);
-    const price = number / decimal;
+    number = new BigNumber(number);
+    decimal = new BigNumber(Math.pow(10, decimal));
+    const price = number.dividedBy(decimal).toNumber();
     return price;
   }
 };

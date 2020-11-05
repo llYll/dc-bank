@@ -9,9 +9,9 @@ class WalletController extends BaseController{
    * @returns {Promise<void>}
    */
   async allocate(ctx) {
-    const constant = this.ctx.config.constant;
-    const { number = 1000, app_id, app_secret } = this.ctx.request.body;
-    const application = await this.ctx.model.Application.findApplication(app_id,app_secret);
+    const constant = this.config.constant;
+    const { number = 1000, app_key, app_secret } = this.ctx.request.body;
+    const application = await this.ctx.model.Application.findApplication(app_key,app_secret);
     if(!application){
       this.failed(
         constant.ERROR_CODE.APPLICATION_NOT_EXIST,
@@ -22,11 +22,6 @@ class WalletController extends BaseController{
     this.success({ wallets:walletsAddress });
   }
 
-
-  async test(ctx) {
-    const result = await this.ctx.service.amqp.send(JSON.stringify({data:"test"}));
-    this.success(result);
-  }
 }
 
 module.exports = WalletController;

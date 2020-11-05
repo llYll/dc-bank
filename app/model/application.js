@@ -11,7 +11,7 @@ module.exports = app => {
       autoIncrement: true,
       comment: '主键'
     },
-    appId: {
+    appKey: {
       type: INTEGER(11),
       defaultValue: 1,
       unique: true,
@@ -34,10 +34,10 @@ module.exports = app => {
     tableName: 'application'
   });
 
-  Application.findApplication = async function(appId, appSecret) {
+  Application.findApplication = async function(appKey, appSecret) {
     return await this.findOne( {
       where:{
-        appId,
+        appKey,
         appSecret
       }
     })

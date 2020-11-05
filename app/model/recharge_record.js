@@ -47,9 +47,9 @@ module.exports = app => {
       comment: 'Nonce',
     },
     value: {
-      type: FLOAT(40, 18),
+      type: STRING(255),
       allowNull: false,
-      comment: '金额，已经除以10^18',
+      comment: '金额',
     },
     gasLimit: {
       type: INTEGER,
@@ -94,12 +94,24 @@ module.exports = app => {
     })
   }
 
-
-  RechargeRecord.addRecord = async function(param, value) {
-    return await this.findCreateFind( {
+  RechargeRecord.findRecord = async function(param) {
+    return await this.findOne( {
       where: param,
-      defaults: value
     })
+  }
+
+  RechargeRecord.addRecord = async function(value) {
+    const data = await this.create(value);
+    return data;
+  }
+
+  RechargeRecord.sendRecord = async function(id) {
+    const data = await this.update({
+      status: 1
+    },{
+      where: { id }
+    });
+    return data;
   }
 
   return RechargeRecord;

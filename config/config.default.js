@@ -32,6 +32,7 @@ module.exports = appInfo => {
       username: 'admin',
       password: 'admin',
     },
+    EXCHANGE_NAME: 'recharge',
     EXCHANGE_TYPE: {
       fanout: 'fanout',
       topic: 'topic',

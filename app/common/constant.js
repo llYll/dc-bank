@@ -8,6 +8,12 @@ module.exports = {
     DISABLE: 2
   },
 
+  RECHARGE_STATUS: {
+    INIT: 0,
+    SEND: 1,
+    DISABLE: 2
+  },
+
   //错误码
   ERROR_CODE: {
     APPLICATION_NOT_EXIST: -10000
